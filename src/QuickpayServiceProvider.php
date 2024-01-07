@@ -8,7 +8,6 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class QuickpayServiceProvider extends PackageServiceProvider
 {
-
     protected bool $defer = true;
 
     public function configurePackage(Package $package): void

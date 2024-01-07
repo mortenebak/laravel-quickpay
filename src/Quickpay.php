@@ -18,12 +18,12 @@ class Quickpay
         $credentials = null;
 
         if (config('quickpay.api_key')) {
-            $credentials = ":" . config('quickpay.api_key');
-        } else if (config('quickpay.login') && config('quickpay.password')) {
+            $credentials = ':'.config('quickpay.api_key');
+        } elseif (config('quickpay.login') && config('quickpay.password')) {
             $credentials = sprintf('%s:%s', config('quickpay.login'), config('quickpay.password'));
         }
 
-        if (!$credentials) {
+        if (! $credentials) {
             throw new ConfigNotCorrect('You should specify an `api_key` or `login` and `password` in the `quickpay` config file');
         }
 
@@ -65,5 +65,4 @@ class Quickpay
             client: $this->client
         );
     }
-
 }

@@ -21,10 +21,6 @@ trait QuickpayApiConsumer
     }
 
     /**
-     * @param string $method
-     * @param string $endpoint
-     * @param array $data
-     * @return object
      * @throws CardNotAccepted
      * @throws QuickPayValidationError
      */
@@ -36,7 +32,7 @@ trait QuickpayApiConsumer
             $data = $response->asObject();
 
             // if app is in production mode, and the request is not a test, and the card is not accepted, throw an exception
-            if (config('app.env') === 'production' && !$data->test_mode && !$data->accepted) {
+            if (config('app.env') === 'production' && ! $data->test_mode && ! $data->accepted) {
                 throw new CardNotAccepted(
                     message: 'You cannot use test cards in production mode.',
                     code: 402
@@ -51,5 +47,4 @@ trait QuickpayApiConsumer
             );
         }
     }
-
 }
