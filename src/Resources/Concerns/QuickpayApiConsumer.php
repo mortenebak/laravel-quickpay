@@ -3,14 +3,12 @@
 namespace Netbums\Quickpay\Resources\Concerns;
 
 use Netbums\Quickpay\Exceptions\CardNotAccepted;
-use Netbums\Quickpay\Exceptions\QuickPayTestNotAllowed;
 use Netbums\Quickpay\Exceptions\QuickPayValidationError;
-use QuickPay\QuickPay as QuickPayVendor;
+use QuickPay\QuickPay;
 
 trait QuickpayApiConsumer
 {
-
-    public QuickPayVendor $client;
+    public QuickPay $client;
 
     public string $endpoint;
 
@@ -18,10 +16,18 @@ trait QuickpayApiConsumer
 
     public array $data;
 
-    public function __construct(QuickPayVendor $client)
+    public function __construct(QuickPay $client)
     {
     }
 
+    /**
+     * @param string $method
+     * @param string $endpoint
+     * @param array $data
+     * @return object
+     * @throws CardNotAccepted
+     * @throws QuickPayValidationError
+     */
     public function request(string $method, string $endpoint, array $data = []): object
     {
         $response = $this->client->request->$method($endpoint, $data);
@@ -29,16 +35,10 @@ trait QuickpayApiConsumer
         if ($response->isSuccess()) {
             $data = $response->asObject();
 
-            if (app()->environment('production') && $data->test_mode) {
-                throw new QuickPayTestNotAllowed(
-                    message: 'You are not allowed to use test cards in production mode',
-                    code: 403
-                );
-            }
-
-            if (!empty($data->operations) && !$data->accepted) {
+            // if app is in production mode, and the request is not a test, and the card is not accepted, throw an exception
+            if (config('app.env') === 'production' && !$data->test_mode && !$data->accepted) {
                 throw new CardNotAccepted(
-                    message: 'The card was not accepted',
+                    message: 'You cannot use test cards in production mode.',
                     code: 402
                 );
             }

@@ -9,25 +9,12 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 
 ## Support us
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-quickpay.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-quickpay)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
-
 ## Installation
 
 You can install the package via composer:
 
 ```bash
 composer require netbums/laravel-quickpay
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-quickpay-migrations"
-php artisan migrate
 ```
 
 You can publish the config file with:
@@ -40,26 +27,21 @@ This is the contents of the published config file:
 
 ```php
 return [
+    'api_key' => env('QUICKPAY_API_KEY'),
+    'login' => env('QUICKPAY_LOGIN'),
+    'password' => env('QUICKPAY_PASSWORD'),
+    'merchant_id' => env('QUICKPAY_MERCHANT_ID'),
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-quickpay-views"
 ```
 
 ## Usage
 
 ```php
-$quickpay = new Netbums\Quickpay();
-echo $quickpay->echoPhrase('Hello, Netbums!');
-```
 
-## Testing
+use \Netbums\Quickpay\Quickpay;
 
-```bash
-composer test
+$payments = Quickpay::payments()->all();
+
 ```
 
 ## Changelog
