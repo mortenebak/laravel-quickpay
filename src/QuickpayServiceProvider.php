@@ -2,12 +2,15 @@
 
 namespace Netbums\Quickpay;
 
+use Netbums\Quickpay\Commands\QuickpayCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Netbums\Quickpay\Commands\QuickpayCommand;
 
 class QuickpayServiceProvider extends PackageServiceProvider
 {
+
+    protected bool $defer = true;
+
     public function configurePackage(Package $package): void
     {
         /*
@@ -21,5 +24,26 @@ class QuickpayServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasMigration('create_laravel-quickpay_table')
             ->hasCommand(QuickpayCommand::class);
+    }
+
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__.'/../config/quickpay.php' => config_path('quickpay.php'),
+        ], 'config');
+    }
+
+    public function register(): void
+    {
+
+        $this->app->singleton('quickpay', function ($app) {
+            return new Quickpay();
+        });
+
+    }
+
+    public function provides(): array
+    {
+        return ['quickpay'];
     }
 }
