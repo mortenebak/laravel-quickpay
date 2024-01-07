@@ -2,6 +2,7 @@
 
 namespace Netbums\Quickpay\Resources;
 
+use Netbums\Quickpay\DataObjects\Payment;
 use Netbums\Quickpay\Resources\Concerns\QuickpayApiConsumer;
 
 class PaymentResource
@@ -13,7 +14,7 @@ class PaymentResource
 
     }
 
-    public function create()
+    public function create(Payment $payment)
     {
 
     }
