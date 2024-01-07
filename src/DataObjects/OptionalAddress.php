@@ -2,7 +2,7 @@
 
 namespace Netbums\Quickpay\DataObjects;
 
-readonly class ShippingAddress
+readonly class OptionalAddress
 {
     public function __construct(
         public ?string $name,
