@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Netbums\Quickpay\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class QuickpayCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-quickpay';
 
     public $description = 'My command';
 
