@@ -4,15 +4,13 @@ namespace Netbums\Quickpay\DataObjects;
 
 readonly class BasketItem
 {
-
     public function __construct(
         public int $qty,
         public string $item_no,
         public string $item_name,
         public int $item_price,
         public float $vat_rate
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): static
@@ -36,5 +34,4 @@ readonly class BasketItem
             'vat_rate' => $this->vat_rate,
         ];
     }
-
 }

@@ -4,7 +4,6 @@ namespace Netbums\Quickpay\DataObjects;
 
 readonly class ShippingAddress
 {
-
     public function __construct(
         public ?string $name,
         public ?string $att,
@@ -20,8 +19,7 @@ readonly class ShippingAddress
         public ?string $phone_number,
         public ?string $mobile_number,
         public ?string $email,
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): static
