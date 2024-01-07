@@ -2,9 +2,9 @@
 
 namespace Netbums\Quickpay;
 
+use Netbums\Quickpay\Commands\QuickpayCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Netbums\Quickpay\Commands\QuickpayCommand;
 
 class QuickpayServiceProvider extends PackageServiceProvider
 {
