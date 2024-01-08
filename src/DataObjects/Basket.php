@@ -2,7 +2,7 @@
 
 namespace Netbums\Quickpay\DataObjects;
 
-class Basket
+readonly class Basket
 {
     /**
      * @param  array<int, BasketItem>  $items
@@ -10,5 +10,12 @@ class Basket
     public function __construct(
         array $items = []
     ) {
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'basket' => $this->items,
+        ];
     }
 }

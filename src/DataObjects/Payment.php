@@ -12,4 +12,15 @@ readonly class Payment
         public ?OptionalAddress $shipping_address,
     ) {
     }
+
+    public function toArray(): array
+    {
+        return [
+            'currency' => $this->currency,
+            'order_id' => $this->order_id,
+            'basket' => $this->basket->toArray(),
+            'invoice_address' => $this->invoice_address?->toArray(),
+            'shipping_address' => $this->shipping_address?->toArray(),
+        ];
+    }
 }
