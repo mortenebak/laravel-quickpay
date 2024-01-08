@@ -4,16 +4,14 @@ namespace Netbums\Quickpay\DataObjects;
 
 readonly class PaymentLink
 {
-
     public function __construct(
-        public int     $id, // transaction id
-        public int     $amount, // Amount to authorize
+        public int $id, // transaction id
+        public int $amount, // Amount to authorize
         public ?string $language,
         public ?string $continue_url,
         public ?string $cancel_url,
         public ?string $callback_url,
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): static
@@ -39,5 +37,4 @@ readonly class PaymentLink
             'callback_url' => $this->callback_url,
         ];
     }
-
 }

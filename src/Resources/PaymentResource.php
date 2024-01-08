@@ -17,7 +17,6 @@ class PaymentResource
     use QuickpayApiConsumer;
 
     /**
-     * @return object
      * @throws FetchPaymentsFailed
      */
     public function all(): object
@@ -39,8 +38,6 @@ class PaymentResource
     }
 
     /**
-     * @param Payment $payment
-     * @return object
      * @throws CreatePaymentFailed
      */
     public function create(Payment $payment): object
@@ -64,15 +61,13 @@ class PaymentResource
 
     /**
      * Create or Update the Payment Link
-     * @param int $id
-     * @param PaymentLink $paymentLink
-     * @return object
+     *
      * @throws CreatePaymentLinkFailed
      */
     public function createLink(int $id, PaymentLink $paymentLink): object
     {
         $this->method = 'put';
-        $this->endpoint = 'payments/' . $id . '/link';
+        $this->endpoint = 'payments/'.$id.'/link';
         $this->data = $paymentLink->toArray();
 
         try {
@@ -90,14 +85,13 @@ class PaymentResource
 
     /**
      * Delete payment link
-     * @param int $id
-     * @return object
+     *
      * @throws DeletePaymentLinkFailed
      */
     public function deleteLink(int $id): object
     {
         $this->method = 'delete';
-        $this->endpoint = 'payments/' . $id . '/link';
+        $this->endpoint = 'payments/'.$id.'/link';
 
         try {
             $response = $this->request($this->method, $this->endpoint);
@@ -114,20 +108,19 @@ class PaymentResource
 
     /**
      * Get Payment
-     * @param int $id
-     * @return object
+     *
      * @throws FetchPaymentFailed
      */
     public function find(int $id): object
     {
         $this->method = 'get';
-        $this->endpoint = 'payments/' . $id;
+        $this->endpoint = 'payments/'.$id;
 
         try {
             $response = $this->request($this->method, $this->endpoint);
         } catch (Throwable $exception) {
             throw new FetchPaymentFailed(
-                message: 'The payment with id ' . $id . ' could not be fetched.',
+                message: 'The payment with id '.$id.' could not be fetched.',
                 code: $exception->getCode(),
                 previous: $exception
             );
@@ -140,48 +133,48 @@ class PaymentResource
     public function createPaymentSession($id)
     {
         $this->method = 'post';
-        $this->endpoint = 'payments/' . $id . '/session';
+        $this->endpoint = 'payments/'.$id.'/session';
     }
 
     // authorize payment
     public function authorize($id)
     {
         $this->method = 'post';
-        $this->endpoint = 'payments/' . $id . '/authorize';
+        $this->endpoint = 'payments/'.$id.'/authorize';
     }
 
     // capture payment
     public function capture($id)
     {
         $this->method = 'post';
-        $this->endpoint = 'payments/' . $id . '/capture';
+        $this->endpoint = 'payments/'.$id.'/capture';
     }
 
     // refund payment
     public function refund($id)
     {
         $this->method = 'post';
-        $this->endpoint = 'payments/' . $id . '/refund';
+        $this->endpoint = 'payments/'.$id.'/refund';
     }
 
     // cancel payment
     public function cancel($id)
     {
         $this->method = 'post';
-        $this->endpoint = 'payments/' . $id . '/cancel';
+        $this->endpoint = 'payments/'.$id.'/cancel';
     }
 
     // renew authorization
     public function renew($id)
     {
         $this->method = 'post';
-        $this->endpoint = 'payments/' . $id . '/renew';
+        $this->endpoint = 'payments/'.$id.'/renew';
     }
 
     // create fraud confirmation report
     public function createFraudConfirmationReport($id)
     {
         $this->method = 'post';
-        $this->endpoint = 'payments/' . $id . '/fraud-report';
+        $this->endpoint = 'payments/'.$id.'/fraud-report';
     }
 }
