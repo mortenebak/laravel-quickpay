@@ -39,7 +39,7 @@ trait QuickpayApiConsumer
                 );
             }
 
-            return $data;
+            return $data->getStatus();
         } else {
             throw new QuickPayValidationError(
                 message: 'The request was not valid',
