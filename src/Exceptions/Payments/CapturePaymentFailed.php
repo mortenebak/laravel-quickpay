@@ -1,6 +1,6 @@
 <?php
 
-namespace Netbums\Quickpay\Exceptions;
+namespace Netbums\Quickpay\Exceptions\Payments;
 
 use Exception;
 
