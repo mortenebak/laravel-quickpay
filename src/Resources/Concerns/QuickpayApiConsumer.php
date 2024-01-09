@@ -33,7 +33,7 @@ trait QuickpayApiConsumer
         if ($response->status_code >= 200 && $response->status_code < 300) {
 
             // if app is in production mode, and the request is not a test, and the card is not accepted, throw an exception
-            if (config('app.env') === 'production' && ! $data->test_mode && ! $data->accepted) {
+            if (config('app.env') === 'production') { // Todo: check if in test mode or if not accepted
                 throw new CardNotAccepted(
                     message: 'You cannot use test cards in production mode.',
                     code: 402
