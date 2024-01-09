@@ -35,14 +35,64 @@ return [
 ```
 
 ## Usage
+The following examples uses this:
 
 ```php
-
 use \Netbums\Quickpay\Quickpay;
-
-$payments = Quickpay::payments()->all();
-
 ```
+
+### Payments
+
+#### Get all payments
+
+```php
+$payments = Quickpay::api()->payments()->all();
+```
+
+#### Get a payment
+Getting a single payment by id
+```php
+$payment = Quickpay::api()->payments()->find($paymentId);
+```
+
+#### Create a payment
+```php
+```
+
+#### Update a payment
+```php
+```
+
+#### Capture a payment
+```php
+```
+
+#### Refund a payment
+```php
+```
+
+#### Authorize a payment
+```php
+```
+
+#### Renew authorization of a payment
+```php
+```
+
+#### Cancel a payment
+```php
+```
+
+#### Create a payment link
+```php
+```
+
+#### Create a payment session
+```php
+```
+
+#### 
+
 
 ## Changelog
 
