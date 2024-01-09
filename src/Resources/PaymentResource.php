@@ -26,7 +26,6 @@ class PaymentResource
     use QuickpayApiConsumer;
 
     /**
-     * @return array
      * @throws FetchPaymentsFailed
      * @throws CardNotAccepted
      * @throws QuickPayValidationError
@@ -53,8 +52,6 @@ class PaymentResource
     }
 
     /**
-     * @param Payment $payment
-     * @return array
      * @throws CreatePaymentFailed
      */
     public function create(Payment $payment): array
@@ -79,9 +76,6 @@ class PaymentResource
     /**
      * Create or Update the Payment Link
      *
-     * @param int $id
-     * @param PaymentLink $paymentLink
-     * @return array
      * @throws CreatePaymentLinkFailed
      */
     public function createLink(int $id, PaymentLink $paymentLink): array
@@ -106,8 +100,6 @@ class PaymentResource
     /**
      * Delete payment link
      *
-     * @param int $id
-     * @return array
      * @throws DeletePaymentLinkFailed
      */
     public function deleteLink(int $id): array
@@ -131,8 +123,6 @@ class PaymentResource
     /**
      * Get Payment
      *
-     * @param int $id
-     * @return array
      * @throws FetchPaymentFailed
      */
     public function find(int $id): array
@@ -156,8 +146,6 @@ class PaymentResource
     /**
      * Create payment session
      *
-     * @param int $id
-     * @return array
      * @throws CreatePaymentSessionFailed
      */
     public function createPaymentSession(int $id): array
