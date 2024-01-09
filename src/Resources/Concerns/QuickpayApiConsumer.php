@@ -8,28 +8,29 @@ use QuickPay\QuickPay;
 
 trait QuickpayApiConsumer
 {
-    public QuickPay $client;
-
     public string $endpoint;
 
     public string $method;
 
     public array $data;
 
-    public function __construct(QuickPay $client)
+    public function __construct(public QuickPay $client)
     {
     }
 
     /**
+     * @param string $method
+     * @param string $endpoint
+     * @param array $data
+     * @return array
      * @throws CardNotAccepted
      * @throws QuickPayValidationError
      */
-    public function request(string $method, string $endpoint, array $data = []): object
+    public function request(string $method, string $endpoint, array $data = []): array
     {
         $response = $this->client->request->$method($endpoint, $data);
 
-        if ($response->isSuccess()) {
-            $data = $response->asObject();
+        if ($response->status_code >= 200 && $response->status_code < 300) {
 
             // if app is in production mode, and the request is not a test, and the card is not accepted, throw an exception
             if (config('app.env') === 'production' && ! $data->test_mode && ! $data->accepted) {
@@ -39,11 +40,12 @@ trait QuickpayApiConsumer
                 );
             }
 
-            return $data->getStatus();
+            return json_decode($response->response_data, true);
+
         } else {
             throw new QuickPayValidationError(
                 message: 'The request was not valid',
-                code: 400
+                code: $response->status_code
             );
         }
     }

@@ -4,6 +4,7 @@ namespace Netbums\Quickpay\Resources;
 
 use Netbums\Quickpay\DataObjects\Payment;
 use Netbums\Quickpay\DataObjects\PaymentLink;
+use Netbums\Quickpay\Exceptions\CardNotAccepted;
 use Netbums\Quickpay\Exceptions\Payments\AuthorizePaymentFailed;
 use Netbums\Quickpay\Exceptions\Payments\CancelPaymentFailed;
 use Netbums\Quickpay\Exceptions\Payments\CapturePaymentFailed;
@@ -16,6 +17,7 @@ use Netbums\Quickpay\Exceptions\Payments\FetchPaymentFailed;
 use Netbums\Quickpay\Exceptions\Payments\FetchPaymentsFailed;
 use Netbums\Quickpay\Exceptions\Payments\RefundPaymentFailed;
 use Netbums\Quickpay\Exceptions\Payments\RenewPaymentFailed;
+use Netbums\Quickpay\Exceptions\QuickPayValidationError;
 use Netbums\Quickpay\Resources\Concerns\QuickpayApiConsumer;
 use Throwable;
 
@@ -24,15 +26,21 @@ class PaymentResource
     use QuickpayApiConsumer;
 
     /**
+     * @return array
      * @throws FetchPaymentsFailed
+     * @throws CardNotAccepted
+     * @throws QuickPayValidationError
      */
-    public function all(): object
+    public function all(): array
     {
         $this->method = 'get';
         $this->endpoint = 'payments';
 
+        $response = $this->request($this->method, $this->endpoint);
+
         try {
             $response = $this->request($this->method, $this->endpoint);
+
         } catch (Throwable $exception) {
             throw new FetchPaymentsFailed(
                 message: 'The payments could not be fetched.',
@@ -45,9 +53,11 @@ class PaymentResource
     }
 
     /**
+     * @param Payment $payment
+     * @return array
      * @throws CreatePaymentFailed
      */
-    public function create(Payment $payment): object
+    public function create(Payment $payment): array
     {
         $this->method = 'post';
         $this->endpoint = 'payments';
@@ -69,9 +79,12 @@ class PaymentResource
     /**
      * Create or Update the Payment Link
      *
+     * @param int $id
+     * @param PaymentLink $paymentLink
+     * @return array
      * @throws CreatePaymentLinkFailed
      */
-    public function createLink(int $id, PaymentLink $paymentLink): object
+    public function createLink(int $id, PaymentLink $paymentLink): array
     {
         $this->method = 'put';
         $this->endpoint = 'payments/'.$id.'/link';
@@ -93,9 +106,11 @@ class PaymentResource
     /**
      * Delete payment link
      *
+     * @param int $id
+     * @return array
      * @throws DeletePaymentLinkFailed
      */
-    public function deleteLink(int $id): object
+    public function deleteLink(int $id): array
     {
         $this->method = 'delete';
         $this->endpoint = 'payments/'.$id.'/link';
@@ -116,9 +131,11 @@ class PaymentResource
     /**
      * Get Payment
      *
+     * @param int $id
+     * @return array
      * @throws FetchPaymentFailed
      */
-    public function find(int $id): object
+    public function find(int $id): array
     {
         $this->method = 'get';
         $this->endpoint = 'payments/'.$id;
@@ -139,9 +156,11 @@ class PaymentResource
     /**
      * Create payment session
      *
+     * @param int $id
+     * @return array
      * @throws CreatePaymentSessionFailed
      */
-    public function createPaymentSession(int $id): object
+    public function createPaymentSession(int $id): array
     {
         $this->method = 'post';
         $this->endpoint = 'payments/'.$id.'/session';
@@ -164,7 +183,7 @@ class PaymentResource
      *
      * @throws AuthorizePaymentFailed
      */
-    public function authorize(int $id, int $amount): object
+    public function authorize(int $id, int $amount): array
     {
         $this->method = 'post';
         $this->endpoint = 'payments/'.$id.'/authorize';
@@ -192,7 +211,7 @@ class PaymentResource
      *
      * @throws CapturePaymentFailed
      */
-    public function capture(int $id, int $amount): object
+    public function capture(int $id, int $amount): array
     {
         $this->method = 'post';
         $this->endpoint = 'payments/'.$id.'/capture';
@@ -220,7 +239,7 @@ class PaymentResource
      *
      * @throws RefundPaymentFailed
      */
-    public function refund(int $id, int $amount): object
+    public function refund(int $id, int $amount): array
     {
         $this->method = 'post';
         $this->endpoint = 'payments/'.$id.'/refund';
@@ -249,7 +268,7 @@ class PaymentResource
      *
      * @throws CancelPaymentFailed
      */
-    public function cancel(int $id): object
+    public function cancel(int $id): array
     {
         $this->method = 'post';
         $this->endpoint = 'payments/'.$id.'/cancel';
@@ -272,7 +291,7 @@ class PaymentResource
      *
      * @throws RenewPaymentFailed
      */
-    public function renew(int $id): object
+    public function renew(int $id): array
     {
         $this->method = 'post';
         $this->endpoint = 'payments/'.$id.'/renew';
@@ -295,7 +314,7 @@ class PaymentResource
      *
      * @throws CreateFraudConfirmationReportFailed
      */
-    public function createFraudConfirmationReport(int $id, ?string $description = null): object
+    public function createFraudConfirmationReport(int $id, ?string $description = null): array
     {
         $this->method = 'post';
         $this->endpoint = 'payments/'.$id.'/fraud-report';
