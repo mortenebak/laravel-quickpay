@@ -323,28 +323,28 @@ class PaymentResource
         return $response;
     }
 
-//    /** Helpers for the createLink() */
-//    public function allowedPaymentMethods(string $paymentMethods): static
-//    {
-//        $this->data['payment_methods'] = $paymentMethods;
-//        return $this;
-//    }
-//
-//    public function autoFee(): static
-//    {
-//        $this->data['auto_fee'] = true;
-//        return $this;
-//    }
-//
-//    public function acquirer(string $aquirer): static
-//    {
-//        $this->data['acquirer'] = $aquirer;
-//        return $this;
-//    }
-//
-//    public function autoCapture(): static
-//    {
-//        $this->data['auto_capture'] = true;
-//        return $this;
-//    }
+    //    /** Helpers for the createLink() */
+    //    public function allowedPaymentMethods(string $paymentMethods): static
+    //    {
+    //        $this->data['payment_methods'] = $paymentMethods;
+    //        return $this;
+    //    }
+    //
+    //    public function autoFee(): static
+    //    {
+    //        $this->data['auto_fee'] = true;
+    //        return $this;
+    //    }
+    //
+    //    public function acquirer(string $aquirer): static
+    //    {
+    //        $this->data['acquirer'] = $aquirer;
+    //        return $this;
+    //    }
+    //
+    //    public function autoCapture(): static
+    //    {
+    //        $this->data['auto_capture'] = true;
+    //        return $this;
+    //    }
 }
