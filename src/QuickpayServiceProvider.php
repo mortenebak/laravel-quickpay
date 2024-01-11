@@ -32,7 +32,7 @@ class QuickpayServiceProvider extends PackageServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../config/quickpay.php' => config_path('quickpay.php'),
+            __DIR__.'/../config/quickpay.php' => config_path('quickpay.php'),
         ], 'laravel-quickpay-config');
     }
 
