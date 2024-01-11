@@ -59,6 +59,26 @@ $payment = Quickpay::api()->payments()->find($paymentId);
 
 #### Create a payment
 ```php
+$basket = new \Netbums\Quickpay\DataObjects\Basket(
+    items: [
+        new \Netbums\Quickpay\DataObjects\BasketItem(
+            qty: 1,
+            item_name: 'Test item',
+            item_no: 'sku-1234',
+            item_price: 100, // in smallest currency unit
+            vat_rate: 25,
+        )
+    ]
+)
+$paymentData = new \Netbums\Quickpay\DataObjects\Payment(
+    currency: 'DKK',
+    order_id: '1234',
+    basket:  $basket,
+)
+
+$createdPayment = \Netbums\Quickpay\Quickpay::api()->payments()->create(
+    payment: $paymentData
+)
 ```
 
 #### Update a payment
