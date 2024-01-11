@@ -24,22 +24,22 @@ class QuickpayServiceProvider extends PackageServiceProvider
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
-                    ->copyAndRegisterServiceProviderInApp();
-                //                    ->askToStarRepoOnGitHub('your-vendor/your-repo-name')
+                    ->copyAndRegisterServiceProviderInApp()
+                    ->askToStarRepoOnGitHub('mortenebak/laravel-quickpay');
             });
     }
 
     public function boot(): void
     {
         $this->publishes([
-            __DIR__.'/../config/quickpay.php' => config_path('quickpay.php'),
+            __DIR__ . '/../config/quickpay.php' => config_path('quickpay.php'),
         ], 'laravel-quickpay-config');
     }
 
     public function register(): void
     {
 
-        $this->app->singleton('quickpay', function ($app) {
+        $this->app->singleton(\Netbums\Quickpay\Quickpay::class, function ($app) {
             return new Quickpay();
         });
 

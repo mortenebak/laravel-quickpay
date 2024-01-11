@@ -12,13 +12,47 @@ This laravel package will help you utilize the Quickpay API Client, without know
 
 ## Installation
 
-You can install the package via composer:
+1. You can install the package via composer:
 
 ```bash
 composer require netbums/laravel-quickpay
 ```
 
-You can publish the config file with:
+[//]: # (2. Add the Provider to your `config/app.php` providers array:)
+
+[//]: # ()
+[//]: # (```php)
+
+[//]: # (// config/app.php)
+
+[//]: # ('providers' => [)
+
+[//]: # (    //...)
+
+[//]: # (    Netbums\Quickpay\QuickpayServiceProvider::class,)
+
+[//]: # (],)
+
+[//]: # (```)
+
+[//]: # (3. Add the facade to your `config/app.php` aliases array:)
+
+[//]: # ()
+[//]: # (```php)
+
+[//]: # (// config/app.php)
+
+[//]: # ('aliases' => [)
+
+[//]: # (    //...)
+
+[//]: # (    'Quickpay' => Netbums\Quickpay\Facades\Quickpay::class,)
+
+[//]: # (],)
+
+[//]: # (```)
+
+2. Publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="laravel-quickpay-config"
@@ -36,6 +70,15 @@ return [
 ];
 ```
 
+3. Add the environment variables to your `.env` file:
+
+```bash
+QUICKPAY_API_KEY=
+QUICKPAY_LOGIN=
+QUICKPAY_PASSWORD=
+QUICKPAY_MERCHANT_ID=
+```
+---
 ## Usage
 The following examples uses this:
 
