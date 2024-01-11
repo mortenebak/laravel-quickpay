@@ -142,10 +142,15 @@ class PaymentResource
      *
      * @throws CreatePaymentSessionFailed
      */
-    public function createPaymentSession(int $id): array
+    public function createPaymentSession(int $id, int $amount): array
     {
         $this->method = 'post';
         $this->endpoint = 'payments/'.$id.'/session';
+
+        $this->data = [
+            'id' => $id,
+            'amount' => $amount,
+        ];
 
         try {
             $response = $this->request($this->method, $this->endpoint);
@@ -317,4 +322,29 @@ class PaymentResource
 
         return $response;
     }
+
+//    /** Helpers for the createLink() */
+//    public function allowedPaymentMethods(string $paymentMethods): static
+//    {
+//        $this->data['payment_methods'] = $paymentMethods;
+//        return $this;
+//    }
+//
+//    public function autoFee(): static
+//    {
+//        $this->data['auto_fee'] = true;
+//        return $this;
+//    }
+//
+//    public function acquirer(string $aquirer): static
+//    {
+//        $this->data['acquirer'] = $aquirer;
+//        return $this;
+//    }
+//
+//    public function autoCapture(): static
+//    {
+//        $this->data['auto_capture'] = true;
+//        return $this;
+//    }
 }
