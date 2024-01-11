@@ -1,9 +1,9 @@
 # A fluent api around the quickpay api for Laravel applications
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/netbums/laravel-quickpay.svg?style=flat-square)](https://packagist.org/packages/netbums/laravel-quickpay)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/netbums/laravel-quickpay/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/netbums/laravel-quickpay/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/netbums/laravel-quickpay/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/netbums/laravel-quickpay/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/netbums/laravel-quickpay.svg?style=flat-square)](https://packagist.org/packages/netbums/laravel-quickpay)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/mortenebak/laravel-quickpay.svg?style=flat-square)](https://packagist.org/packages/mortenebak/laravel-quickpay)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/mortenebak/laravel-quickpay/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/mortenebak/laravel-quickpay/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/mortenebak/laravel-quickpay/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/mortenebak/laravel-quickpay/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/mortenebak/laravel-quickpay.svg?style=flat-square)](https://packagist.org/packages/mortenebak/laravel-quickpay)
 
 This laravel package will help you utilize the Quickpay API Client, without knowing too much about the endpoints. It provides a fluent api for using the API. See examples below.
 
