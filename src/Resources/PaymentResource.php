@@ -70,8 +70,9 @@ class PaymentResource
      *
      * @throws CreatePaymentLinkFailed
      */
-    public function createLink(int $id, PaymentLink $paymentLink): array
+    public function createLink(PaymentLink $paymentLink): array
     {
+        $id = $paymentLink->id;
         $this->method = 'put';
         $this->endpoint = 'payments/'.$id.'/link';
         $this->data = $paymentLink->toArray();

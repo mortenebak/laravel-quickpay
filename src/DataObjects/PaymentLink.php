@@ -7,10 +7,10 @@ readonly class PaymentLink
     public function __construct(
         public int $id, // transaction id
         public int $amount, // Amount to authorize
-        public ?string $language,
-        public ?string $continue_url,
-        public ?string $cancel_url,
-        public ?string $callback_url,
+        public ?string $language = null,
+        public ?string $continue_url = null,
+        public ?string $cancel_url = null,
+        public ?string $callback_url = null,
     ) {
     }
 
@@ -19,10 +19,10 @@ readonly class PaymentLink
         return new static(
             id: $data['id'],
             amount: $data['amount'],
-            language: $data['language'],
-            continue_url: $data['continue_url'],
-            cancel_url: $data['cancel_url'],
-            callback_url: $data['callback_url'],
+            language: $data['language'] ?? null,
+            continue_url: $data['continue_url'] ?? null,
+            cancel_url: $data['cancel_url'] ?? null,
+            callback_url: $data['callback_url'] ?? null,
         );
     }
 

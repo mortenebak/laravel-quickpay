@@ -129,6 +129,17 @@ $createdPayment = \Netbums\Quickpay\Quickpay::api()->payments()->create(
 ```
 After a payment is created you can create a payment link for it, and redirect the user to the payment link.
 
+#### Create a payment link
+```php
+$paymentLinkData = new \Netbums\Quickpay\DataObjects\PaymentLink(
+    id: 437296737, 
+    amount: 100
+);
+
+$paymentLink = \Netbums\Quickpay\Quickpay::api()->payments()->createLink($paymentLinkData);
+```
+This will return a URL, that you can redirect the user to.
+
 #### Update a payment
 ```php
 ```
