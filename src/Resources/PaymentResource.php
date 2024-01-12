@@ -56,7 +56,7 @@ class PaymentResource
             $response = $this->request($this->method, $this->endpoint, $this->data);
         } catch (Throwable $exception) {
             throw new CreatePaymentFailed(
-                message: 'The payment could not be created. Error: ' . $exception->getMessage(),
+                message: 'The payment could not be created. Error: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );

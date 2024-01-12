@@ -43,7 +43,7 @@ trait QuickpayApiConsumer
             dd($message);
 
             throw new QuickPayValidationError(
-                message: 'The request was not valid: ' . $message,
+                message: 'The request was not valid: '.$message,
                 code: $response->status_code
             );
         }
