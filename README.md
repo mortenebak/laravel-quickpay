@@ -110,7 +110,7 @@ $basket = new \Netbums\Quickpay\DataObjects\Basket(
             item_name: 'Test item',
             item_no: 'sku-1234',
             item_price: 100, // in smallest currency unit
-            vat_rate: 25,
+            vat_rate: 0.25, // 25%
         )
     ]
 )

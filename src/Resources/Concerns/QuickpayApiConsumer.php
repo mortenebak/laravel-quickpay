@@ -12,7 +12,7 @@ trait QuickpayApiConsumer
 
     public string $method;
 
-    public array $data;
+    public array $data = [];
 
     public function __construct(public QuickPay $client)
     {
@@ -22,7 +22,7 @@ trait QuickpayApiConsumer
      * @throws CardNotAccepted
      * @throws QuickPayValidationError
      */
-    public function request(string $method, string $endpoint, array $data = []): array
+    public function request(string $method, string $endpoint, array $data): array
     {
         $response = $this->client->request->$method($endpoint, $data);
 
@@ -39,8 +39,11 @@ trait QuickpayApiConsumer
             return json_decode($response->response_data, true);
 
         } else {
+            $message = json_decode($response->response_data, true);
+            dd($message);
+
             throw new QuickPayValidationError(
-                message: 'The request was not valid',
+                message: 'The request was not valid: ' . $message,
                 code: $response->status_code
             );
         }

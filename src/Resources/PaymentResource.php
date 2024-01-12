@@ -33,7 +33,6 @@ class PaymentResource
 
         try {
             $response = $this->request($this->method, $this->endpoint);
-
         } catch (Throwable $exception) {
             throw new FetchPaymentsFailed(
                 message: 'The payments could not be fetched.',
@@ -53,12 +52,11 @@ class PaymentResource
         $this->method = 'post';
         $this->endpoint = 'payments';
         $this->data = $payment->toArray();
-
         try {
             $response = $this->request($this->method, $this->endpoint, $this->data);
         } catch (Throwable $exception) {
             throw new CreatePaymentFailed(
-                message: 'The payment could not be created.',
+                message: 'The payment could not be created. Error: ' . $exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );
