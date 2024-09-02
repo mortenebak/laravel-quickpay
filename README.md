@@ -55,8 +55,9 @@ composer require netbums/laravel-quickpay
 2. Publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-quickpay-config"
+php artisan vendor:publish
 ```
+Search for "quickpay", and publish both the config and Netbums\Quickpay\QuickpayServiceProvider
 
 This is the contents of the published config file:
 
@@ -74,6 +75,10 @@ return [
 
 ```bash
 QUICKPAY_API_KEY=
+```
+And alternatively, you can add the following environment variables to your `.env` file:
+
+```bash
 QUICKPAY_LOGIN=
 QUICKPAY_PASSWORD=
 QUICKPAY_MERCHANT_ID=
@@ -83,7 +88,7 @@ QUICKPAY_MERCHANT_ID=
 The following examples uses this:
 
 ```php
-use \Netbums\Quickpay\Quickpay;
+use \Netbums\Quickpay\Facades\Quickpay;
 ```
 
 ### Payments
@@ -91,13 +96,13 @@ use \Netbums\Quickpay\Quickpay;
 #### Get all payments
 
 ```php
-$payments = Quickpay::api()->payments()->all();
+$payments = Quickpay::payments()->all();
 ```
 
 #### Get a payment
 Getting a single payment by id
 ```php
-$payment = Quickpay::api()->payments()->find($paymentId);
+$payment = Quickpay::payments()->find($paymentId);
 ```
 
 #### Create a payment
@@ -123,7 +128,7 @@ $paymentData = new \Netbums\Quickpay\DataObjects\Payment(
 )
 
 // Then create the payment
-$createdPayment = \Netbums\Quickpay\Quickpay::api()->payments()->create(
+$createdPayment = \Netbums\Quickpay\Quickpay::payments()->create(
     payment: $paymentData
 )
 ```
@@ -136,7 +141,7 @@ $paymentLinkData = new \Netbums\Quickpay\DataObjects\PaymentLink(
     amount: 100
 );
 
-$paymentLink = \Netbums\Quickpay\Quickpay::api()->payments()->createLink($paymentLinkData);
+$paymentLink = \Netbums\Quickpay\Quickpay::payments()->createLink($paymentLinkData);
 ```
 This will return a URL, that you can redirect the user to.
 
@@ -147,7 +152,7 @@ This will return a URL, that you can redirect the user to.
 #### Capture a payment
 Capture a payment. This will capture the amount of the payment specified.
 ```php
-$payment = Quickpay::api()->payments()->capture(
+$payment = Quickpay::payments()->capture(
     id: $paymentId,
     amount: 100, // in smallest currency unit
 );
@@ -156,7 +161,7 @@ $payment = Quickpay::api()->payments()->capture(
 #### Refund a payment
 Refund a payment. This will refund the amount of the payment specified.
 ```php
-$payment = Quickpay::api()->payments()->refund(
+$payment = Quickpay::payments()->refund(
     id: $paymentId,
     amount: 100, // in smallest currency unit
 );
@@ -165,7 +170,7 @@ $payment = Quickpay::api()->payments()->refund(
 #### Authorize a payment
 Authorize a payment. This will reserve the amount on the card, but not capture it.
 ```php
-$payment = Quickpay::api()->payments()->authorize(
+$payment = Quickpay::payments()->authorize(
     id: $paymentId,
     amount: 100, // in smallest currency unit
 );
@@ -174,7 +179,7 @@ $payment = Quickpay::api()->payments()->authorize(
 #### Renew authorization of a payment
 Renew the authorization of a payment. This will reserve the amount on the card, but not capture it.
 ```php
-$payment = Quickpay::api()->payments()->renew(
+$payment = Quickpay::payments()->renew(
     id: $paymentId,
 );
 ```
@@ -182,7 +187,7 @@ $payment = Quickpay::api()->payments()->renew(
 #### Cancel a payment
 Cancel a payment. This will cancel the payment, and release the reserved amount on the card.
 ```php
-$payment = Quickpay::api()->payments()->cancel(
+$payment = Quickpay::payments()->cancel(
     id: $paymentId,
 );
 ```
@@ -199,14 +204,14 @@ $paymentLinkData = new \Netbums\Quickpay\DataObjects\PaymentLink(
     callback_url: 'https://example.com/callback',
 );
 
-$paymentLink = Quickpay::api()->payments()->createPaymentLink(
+$paymentLink = Quickpay::payments()->createPaymentLink(
     paymentLink: $paymentLinkData,
 );
 ```
 
 #### Create a payment session
 ```php
-$session = Quickpay::api()->payments()->session(
+$session = Quickpay::payments()->session(
     id: $paymentId,
     amount: 100, // in smallest currency unit
 );

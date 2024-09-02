@@ -13,8 +13,7 @@ class SubscriptionResource
     use QuickpayApiConsumer;
 
     /**
-     * @throws CardNotAccepted
-     * @throws QuickPayValidationError
+     * @return array
      * @throws FetchSubscriptionsFailed
      */
     public function all(): array
