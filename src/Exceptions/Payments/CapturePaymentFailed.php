@@ -4,6 +4,4 @@ namespace Netbums\Quickpay\Exceptions\Payments;
 
 use Exception;
 
-class CapturePaymentFailed extends Exception
-{
-}
+class CapturePaymentFailed extends Exception {}

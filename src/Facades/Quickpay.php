@@ -9,7 +9,6 @@ use Netbums\Quickpay\Resources\PaymentResource;
 use Netbums\Quickpay\Resources\PayoutResource;
 use Netbums\Quickpay\Resources\SubscriptionResource;
 
-
 /**
  * @method static PaymentResource payments();
  * @method static SubscriptionResource subscriptions();

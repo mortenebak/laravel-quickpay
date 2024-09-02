@@ -4,6 +4,4 @@ namespace Netbums\Quickpay\Exceptions;
 
 use Exception;
 
-class ConfigNotCorrect extends Exception
-{
-}
+class ConfigNotCorrect extends Exception {}

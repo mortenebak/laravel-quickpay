@@ -4,6 +4,4 @@ namespace Netbums\Quickpay\Exceptions\Payments;
 
 use Exception;
 
-class DeletePaymentLinkFailed extends Exception
-{
-}
+class DeletePaymentLinkFailed extends Exception {}

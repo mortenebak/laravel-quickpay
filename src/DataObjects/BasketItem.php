@@ -10,8 +10,7 @@ readonly class BasketItem
         public string $item_name,
         public int $item_price,
         public float $vat_rate
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): static
     {

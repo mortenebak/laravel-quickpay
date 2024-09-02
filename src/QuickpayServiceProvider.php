@@ -44,7 +44,7 @@ class QuickpayServiceProvider extends PackageServiceProvider
     {
 
         $this->app->singleton(\Netbums\Quickpay\Quickpay::class, function ($app) {
-            return (new Quickpay())::api();
+            return (new Quickpay)::api();
         });
 
     }

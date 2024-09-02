@@ -11,8 +11,7 @@ readonly class PaymentLink
         public ?string $continue_url = null,
         public ?string $cancel_url = null,
         public ?string $callback_url = null,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): static
     {

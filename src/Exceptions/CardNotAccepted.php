@@ -4,6 +4,4 @@ namespace Netbums\Quickpay\Exceptions;
 
 use Exception;
 
-class CardNotAccepted extends Exception
-{
-}
+class CardNotAccepted extends Exception {}
