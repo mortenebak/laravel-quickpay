@@ -10,8 +10,7 @@ readonly class Payment
         public Basket $basket,
         public ?OptionalAddress $invoice_address = null,
         public ?OptionalAddress $shipping_address = null,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

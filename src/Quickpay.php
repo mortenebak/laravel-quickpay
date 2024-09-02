@@ -33,7 +33,7 @@ class Quickpay
 
     public static function api(): static
     {
-        return new static();
+        return new static;
     }
 
     public function payments(): PaymentResource

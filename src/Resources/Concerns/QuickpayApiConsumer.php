@@ -14,9 +14,7 @@ trait QuickpayApiConsumer
 
     public array $data = [];
 
-    public function __construct(public QuickPay $client)
-    {
-    }
+    public function __construct(public QuickPay $client) {}
 
     /**
      * @throws CardNotAccepted

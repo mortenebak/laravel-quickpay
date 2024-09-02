@@ -19,8 +19,7 @@ readonly class OptionalAddress
         public ?string $phone_number,
         public ?string $mobile_number,
         public ?string $email,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): static
     {
