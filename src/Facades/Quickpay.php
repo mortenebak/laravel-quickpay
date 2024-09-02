@@ -3,9 +3,19 @@
 namespace Netbums\Quickpay\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use Netbums\Quickpay\Resources\CardResource;
+use Netbums\Quickpay\Resources\FeeResource;
+use Netbums\Quickpay\Resources\PaymentResource;
+use Netbums\Quickpay\Resources\PayoutResource;
+use Netbums\Quickpay\Resources\SubscriptionResource;
+
 
 /**
- * @see \Netbums\Quickpay\Quickpay
+ * @method static PaymentResource payments();
+ * @method static SubscriptionResource subscriptions();
+ * @method static CardResource cards();
+ * @method static FeeResource fees();
+ * @method static PayoutResource payouts();
  */
 class Quickpay extends Facade
 {
