@@ -22,7 +22,7 @@ trait QuickpayApiConsumer
      * @throws CardNotAccepted
      * @throws QuickPayValidationError
      */
-    public function request(string $method, string $endpoint, array $data): array
+    public function request(string $method, string $endpoint, array $data = []): array
     {
         $response = $this->client->request->$method($endpoint, $data);
 

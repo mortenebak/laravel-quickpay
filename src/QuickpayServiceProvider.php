@@ -2,6 +2,7 @@
 
 namespace Netbums\Quickpay;
 
+use Illuminate\Foundation\AliasLoader;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -34,13 +35,16 @@ class QuickpayServiceProvider extends PackageServiceProvider
         $this->publishes([
             __DIR__.'/../config/quickpay.php' => config_path('quickpay.php'),
         ], 'laravel-quickpay-config');
+
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Quickpay', Facades\Quickpay::class);
     }
 
     public function register(): void
     {
 
         $this->app->singleton(\Netbums\Quickpay\Quickpay::class, function ($app) {
-            return new Quickpay();
+            return (new Quickpay())::api();
         });
 
     }
