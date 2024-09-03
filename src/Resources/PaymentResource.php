@@ -25,7 +25,7 @@ class PaymentResource
 
     /**
      * Fetch all payments
-     * @return array
+     *
      * @throws FetchPaymentsFailed
      */
     public function all(): array
@@ -48,8 +48,7 @@ class PaymentResource
 
     /**
      * Create Payment
-     * @param Payment $payment
-     * @return array
+     *
      * @throws CreatePaymentFailed
      */
     public function create(Payment $payment): array
@@ -72,8 +71,7 @@ class PaymentResource
 
     /**
      * Create or Update the Payment Link
-     * @param PaymentLink $paymentLink
-     * @return array
+     *
      * @throws CreatePaymentLinkFailed
      */
     public function createLink(PaymentLink $paymentLink): array
@@ -98,8 +96,7 @@ class PaymentResource
 
     /**
      * Delete payment link
-     * @param int $id
-     * @return array
+     *
      * @throws DeletePaymentLinkFailed
      */
     public function deleteLink(int $id): array
@@ -122,8 +119,7 @@ class PaymentResource
 
     /**
      * Get Payment
-     * @param int $id
-     * @return array
+     *
      * @throws FetchPaymentFailed
      */
     public function find(int $id): array
@@ -146,9 +142,7 @@ class PaymentResource
 
     /**
      * Create payment session
-     * @param int $id
-     * @param int $amount
-     * @return array
+     *
      * @throws CreatePaymentSessionFailed
      */
     public function createPaymentSession(int $id, int $amount): array
@@ -176,9 +170,7 @@ class PaymentResource
 
     /**
      * authorize payment
-     * @param int $id
-     * @param int $amount
-     * @return array
+     *
      * @throws AuthorizePaymentFailed
      */
     public function authorize(int $id, int $amount): array
@@ -206,9 +198,7 @@ class PaymentResource
 
     /**
      * capture payment
-     * @param int $id
-     * @param int $amount
-     * @return array
+     *
      * @throws CapturePaymentFailed
      */
     public function capture(int $id, int $amount): array
@@ -236,9 +226,7 @@ class PaymentResource
 
     /**
      * refund payment
-     * @param int $id
-     * @param int $amount
-     * @return array
+     *
      * @throws RefundPaymentFailed
      */
     public function refund(int $id, int $amount): array
@@ -267,8 +255,7 @@ class PaymentResource
 
     /**
      * cancel payment
-     * @param int $id
-     * @return array
+     *
      * @throws CancelPaymentFailed
      */
     public function cancel(int $id): array
@@ -291,8 +278,7 @@ class PaymentResource
 
     /**
      * renew authorization
-     * @param int $id
-     * @return array
+     *
      * @throws RenewPaymentFailed
      */
     public function renew(int $id): array
@@ -315,9 +301,7 @@ class PaymentResource
 
     /**
      * create fraud confirmation report
-     * @param int $id
-     * @param string|null $description
-     * @return array
+     *
      * @throws CreateFraudConfirmationReportFailed
      */
     public function createFraudConfirmationReport(int $id, ?string $description = null): array

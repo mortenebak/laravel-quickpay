@@ -18,10 +18,7 @@ trait QuickpayApiConsumer
 
     /**
      * Make a request to the Quickpay API
-     * @param string $method
-     * @param string $endpoint
-     * @param array $data
-     * @return array
+     *
      * @throws CardNotAccepted
      * @throws QuickPayValidationError
      */
