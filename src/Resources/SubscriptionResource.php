@@ -2,6 +2,8 @@
 
 namespace Netbums\Quickpay\Resources;
 
+use Netbums\Quickpay\Exceptions\QuickPayValidationError;
+use Netbums\Quickpay\Exceptions\Subscriptions\FetchSubscriptionFailed;
 use Netbums\Quickpay\Exceptions\Subscriptions\FetchSubscriptionsFailed;
 use Netbums\Quickpay\Resources\Concerns\QuickpayApiConsumer;
 use Throwable;
@@ -68,6 +70,9 @@ class SubscriptionResource
 
     // @see https://learn.quickpay.net/tech-talk/api/services/#POST-subscriptions---format-
     // TODO: convert the provided array to a DTO
+    /**
+     * @throws QuickPayValidationError
+     */
     public function create(array $data): array
     {
         $this->method = 'post';
