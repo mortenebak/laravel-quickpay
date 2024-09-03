@@ -57,7 +57,7 @@ composer require netbums/laravel-quickpay
 ```bash
 php artisan vendor:publish
 ```
-Search for "quickpay", and publish both the config and Netbums\Quickpay\QuickpayServiceProvider
+Search for "quickpay", and publish both the **config** and `Netbums\Quickpay\QuickpayServiceProvider`
 
 This is the contents of the published config file:
 
@@ -76,7 +76,7 @@ return [
 ```bash
 QUICKPAY_API_KEY=
 ```
-And alternatively, you can add the following environment variables to your `.env` file:
+And alternatively, you can add the following environment variables to your `.env` file instead of the `QUICKPAY_API_KEY`:
 
 ```bash
 QUICKPAY_LOGIN=
@@ -85,32 +85,37 @@ QUICKPAY_MERCHANT_ID=
 ```
 ---
 ## Usage
-The following examples uses this:
-
-```php
-use \Netbums\Quickpay\Facades\Quickpay;
-```
 
 ### Payments
 
 #### Get all payments
 
 ```php
+use \Netbums\Quickpay\Facades\Quickpay;
+
 $payments = Quickpay::payments()->all();
 ```
 
 #### Get a payment
 Getting a single payment by id
 ```php
+use \Netbums\Quickpay\Facades\Quickpay;
+
 $payment = Quickpay::payments()->find($paymentId);
 ```
 
 #### Create a payment
+First create a basket with items, and then create a payment with the basket and a unique order id.
 ```php
-// First create a basket with items
-$basket = new \Netbums\Quickpay\DataObjects\Basket(
+
+use \Netbums\Quickpay\DataObjects\Basket;
+use \Netbums\Quickpay\DataObjects\BasketItem;
+use \Netbums\Quickpay\DataObjects\Payment;
+use \Netbums\Quickpay\Facades\Quickpay;
+
+$basket = new Basket(
     items: [
-        new \Netbums\Quickpay\DataObjects\BasketItem(
+        new BasketItem(
             qty: 1,
             item_name: 'Test item',
             item_no: 'sku-1234',
@@ -120,10 +125,7 @@ $basket = new \Netbums\Quickpay\DataObjects\Basket(
     ]
 )
 
-// Then create a payment with the basket, and a unique order id
-use \Netbums\Quickpay\Facades\Quickpay;
-
-$paymentData = new \Netbums\Quickpay\DataObjects\Payment(
+$paymentData = new Payment(
     currency: 'DKK',
     order_id: '1234',
     basket:  $basket,
@@ -139,8 +141,9 @@ After a payment is created you can create a payment link for it, and redirect th
 #### Create a payment link
 ```php
 use \Netbums\Quickpay\Facades\Quickpay;
+use \Netbums\Quickpay\DataObjects\PaymentLink;
 
-$paymentLinkData = new \Netbums\Quickpay\DataObjects\PaymentLink(
+$paymentLinkData = new PaymentLink(
     id: 437296737, 
     amount: 100
 );
@@ -210,8 +213,9 @@ $payment = Quickpay::payments()->cancel(
 Create a payment link for a payment. Optional parameters are: `language`, `continue_url`, `cancel_url`, `callback_url`:
 ```php
 use \Netbums\Quickpay\Facades\Quickpay;
+use \Netbums\Quickpay\DataObjects\PaymentLink;
 
-$paymentLinkData = new \Netbums\Quickpay\DataObjects\PaymentLink(
+$paymentLinkData = new PaymentLink(
     id: $paymentId,
     amount: 100, // in smallest currency unit
     language: 'da',
@@ -240,7 +244,7 @@ Create a fraud report for a payment. Optional parameters are: `description`:
 ```php
 use \Netbums\Quickpay\Facades\Quickpay;
 
-$fraudReport = Quickpay()->payments()->createFraudReport(
+$fraudReport = Quickpay::payments()->createFraudReport(
     id: $paymentId,
     description: 'Fraudulent payment',
 );
