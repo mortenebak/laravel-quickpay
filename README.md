@@ -121,14 +121,16 @@ $basket = new \Netbums\Quickpay\DataObjects\Basket(
 )
 
 // Then create a payment with the basket, and a unique order id
+use \Netbums\Quickpay\Facades\Quickpay;
+
 $paymentData = new \Netbums\Quickpay\DataObjects\Payment(
     currency: 'DKK',
     order_id: '1234',
     basket:  $basket,
 )
 
-// Then create the payment
-$createdPayment = \Netbums\Quickpay\Quickpay::payments()->create(
+
+$createdPayment = Quickpay::payments()->create(
     payment: $paymentData
 )
 ```
@@ -136,12 +138,14 @@ After a payment is created you can create a payment link for it, and redirect th
 
 #### Create a payment link
 ```php
+use \Netbums\Quickpay\Facades\Quickpay;
+
 $paymentLinkData = new \Netbums\Quickpay\DataObjects\PaymentLink(
     id: 437296737, 
     amount: 100
 );
 
-$paymentLink = \Netbums\Quickpay\Quickpay::payments()->createLink($paymentLinkData);
+$paymentLink = Quickpay::payments()->createLink($paymentLinkData);
 ```
 This will return a URL, that you can redirect the user to.
 
@@ -152,6 +156,8 @@ This will return a URL, that you can redirect the user to.
 #### Capture a payment
 Capture a payment. This will capture the amount of the payment specified.
 ```php
+use \Netbums\Quickpay\Facades\Quickpay;
+
 $payment = Quickpay::payments()->capture(
     id: $paymentId,
     amount: 100, // in smallest currency unit
@@ -161,6 +167,8 @@ $payment = Quickpay::payments()->capture(
 #### Refund a payment
 Refund a payment. This will refund the amount of the payment specified.
 ```php
+use \Netbums\Quickpay\Facades\Quickpay;
+
 $payment = Quickpay::payments()->refund(
     id: $paymentId,
     amount: 100, // in smallest currency unit
@@ -170,6 +178,8 @@ $payment = Quickpay::payments()->refund(
 #### Authorize a payment
 Authorize a payment. This will reserve the amount on the card, but not capture it.
 ```php
+use \Netbums\Quickpay\Facades\Quickpay;
+
 $payment = Quickpay::payments()->authorize(
     id: $paymentId,
     amount: 100, // in smallest currency unit
@@ -179,6 +189,8 @@ $payment = Quickpay::payments()->authorize(
 #### Renew authorization of a payment
 Renew the authorization of a payment. This will reserve the amount on the card, but not capture it.
 ```php
+use \Netbums\Quickpay\Facades\Quickpay;
+
 $payment = Quickpay::payments()->renew(
     id: $paymentId,
 );
@@ -187,6 +199,8 @@ $payment = Quickpay::payments()->renew(
 #### Cancel a payment
 Cancel a payment. This will cancel the payment, and release the reserved amount on the card.
 ```php
+use \Netbums\Quickpay\Facades\Quickpay;
+
 $payment = Quickpay::payments()->cancel(
     id: $paymentId,
 );
@@ -195,6 +209,8 @@ $payment = Quickpay::payments()->cancel(
 #### Create a payment link
 Create a payment link for a payment. Optional parameters are: `language`, `continue_url`, `cancel_url`, `callback_url`:
 ```php
+use \Netbums\Quickpay\Facades\Quickpay;
+
 $paymentLinkData = new \Netbums\Quickpay\DataObjects\PaymentLink(
     id: $paymentId,
     amount: 100, // in smallest currency unit
@@ -211,6 +227,8 @@ $paymentLink = Quickpay::payments()->createPaymentLink(
 
 #### Create a payment session
 ```php
+use \Netbums\Quickpay\Facades\Quickpay;
+
 $session = Quickpay::payments()->session(
     id: $paymentId,
     amount: 100, // in smallest currency unit
@@ -220,7 +238,9 @@ $session = Quickpay::payments()->session(
 #### Create Fraud Report
 Create a fraud report for a payment. Optional parameters are: `description`:
 ```php
-$fraudReport = new \Netbums\Quickpay\Quickpay()->payments()->createFraudReport(
+use \Netbums\Quickpay\Facades\Quickpay;
+
+$fraudReport = Quickpay()->payments()->createFraudReport(
     id: $paymentId,
     description: 'Fraudulent payment',
 );
