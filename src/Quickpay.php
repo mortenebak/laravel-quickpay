@@ -49,25 +49,4 @@ class Quickpay
             client: $this->client
         );
     }
-
-    public function cards(): CardResource
-    {
-        return new CardResource(
-            client: $this->client
-        );
-    }
-
-    public function payouts(): PayoutResource
-    {
-        return new PayoutResource(
-            client: $this->client
-        );
-    }
-
-    public function fees(): FeeResource
-    {
-        return new FeeResource(
-            client: $this->client
-        );
-    }
 }
