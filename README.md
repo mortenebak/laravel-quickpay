@@ -123,18 +123,18 @@ $basket = new Basket(
             vat_rate: 0.25, // 25%
         )
     ]
-)
+);
 
 $paymentData = new Payment(
     currency: 'DKK',
     order_id: '1234',
     basket:  $basket,
-)
+);
 
 
 $createdPayment = Quickpay::payments()->create(
     payment: $paymentData
-)
+);
 ```
 After a payment is created you can create a payment link for it, and redirect the user to the payment link.
 
@@ -144,7 +144,7 @@ use \Netbums\Quickpay\Facades\Quickpay;
 use \Netbums\Quickpay\DataObjects\PaymentLink;
 
 $paymentLinkData = new PaymentLink(
-    id: 437296737, 
+    id: $createdPayment['id'], 
     amount: 100
 );
 
