@@ -2,14 +2,34 @@
 
 namespace Netbums\Quickpay\Resources;
 
+use Netbums\Quickpay\Exceptions\Payouts\FetchPayoutsFailed;
 use Netbums\Quickpay\Resources\Concerns\QuickpayApiConsumer;
+use Throwable;
 
 class PayoutResource
 {
     use QuickpayApiConsumer;
 
-    // get payouts
-    public function all(): array {}
+    /**
+     * get payouts
+     * @throws FetchPayoutsFailed
+     */
+    public function all(): array {
+        $this->method = 'get';
+        $this->endpoint = 'payments';
+
+        try {
+            $response = $this->request($this->method, $this->endpoint);
+        } catch (Throwable $exception) {
+            throw new FetchPayoutsFailed(
+                message: 'The payouts could not be fetched.',
+                code: $exception->getCode(),
+                previous: $exception
+            );
+        }
+
+        return $response;
+    }
 
     // create payout
     public function create(): array {}
