@@ -2,8 +2,6 @@
 
 namespace Netbums\Quickpay\Resources;
 
-use Netbums\Quickpay\Exceptions\QuickPayValidationError;
-use Netbums\Quickpay\Exceptions\Subscriptions\FetchSubscriptionFailed;
 use Netbums\Quickpay\Exceptions\Subscriptions\FetchSubscriptionsFailed;
 use Netbums\Quickpay\Resources\Concerns\QuickpayApiConsumer;
 use Throwable;
@@ -13,7 +11,6 @@ class SubscriptionResource
     use QuickpayApiConsumer;
 
     /**
-     * @return array
      * @throws FetchSubscriptionsFailed
      */
     public function all(): array
