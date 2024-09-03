@@ -3,10 +3,7 @@
 namespace Netbums\Quickpay;
 
 use Netbums\Quickpay\Exceptions\ConfigNotCorrect;
-use Netbums\Quickpay\Resources\CardResource;
-use Netbums\Quickpay\Resources\FeeResource;
 use Netbums\Quickpay\Resources\PaymentResource;
-use Netbums\Quickpay\Resources\PayoutResource;
 use Netbums\Quickpay\Resources\SubscriptionResource;
 
 class Quickpay
