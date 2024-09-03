@@ -30,8 +30,6 @@ class SubscriptionResource
     }
 
     /**
-     * @param string $subscriptionId
-     * @return array
      * @throws FetchSubscriptionFailed
      */
     public function find(string $subscriptionId): array
