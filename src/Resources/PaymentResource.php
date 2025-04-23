@@ -17,7 +17,6 @@ use Netbums\Quickpay\Exceptions\Payments\FetchPaymentsFailed;
 use Netbums\Quickpay\Exceptions\Payments\RefundPaymentFailed;
 use Netbums\Quickpay\Exceptions\Payments\RenewPaymentFailed;
 use Netbums\Quickpay\Resources\Concerns\QuickpayApiConsumer;
-
 use Throwable;
 
 class PaymentResource

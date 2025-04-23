@@ -6,22 +6,19 @@ use Netbums\Quickpay\DataObjects\Subscription;
 use Netbums\Quickpay\DataObjects\SubscriptionLink;
 use Netbums\Quickpay\DataObjects\SubscriptionRecurring;
 use Netbums\Quickpay\Exceptions\QuickPayValidationError;
-use Netbums\Quickpay\Exceptions\Subscriptions\FetchSubscriptionFailed;
-use Netbums\Quickpay\Exceptions\Subscriptions\FetchSubscriptionsFailed;
+use Netbums\Quickpay\Exceptions\Subscriptions\AuthorizeSubscriptionFailed;
+use Netbums\Quickpay\Exceptions\Subscriptions\CancelSubscriptionFailed;
 use Netbums\Quickpay\Exceptions\Subscriptions\CreateRecurringFailed;
 use Netbums\Quickpay\Exceptions\Subscriptions\CreateSubscriptionFailed;
 use Netbums\Quickpay\Exceptions\Subscriptions\CreateSubscriptionLinkFailed;
 use Netbums\Quickpay\Exceptions\Subscriptions\DeletePaymentLinkFailed;
-use Netbums\Quickpay\Exceptions\Subscriptions\UpdateSubscriptionFailed;
-use Netbums\Quickpay\Exceptions\Subscriptions\AuthorizeSubscriptionFailed;
-use Netbums\Quickpay\Exceptions\Subscriptions\CancelSubscriptionFailed;
+use Netbums\Quickpay\Exceptions\Subscriptions\FetchSubscriptionFailed;
+use Netbums\Quickpay\Exceptions\Subscriptions\FetchSubscriptionsFailed;
 use Netbums\Quickpay\Exceptions\Subscriptions\FraudReportSubscriptionFailed;
 use Netbums\Quickpay\Exceptions\Subscriptions\GetSubscriptionPaymentsFailed;
+use Netbums\Quickpay\Exceptions\Subscriptions\UpdateSubscriptionFailed;
 use Netbums\Quickpay\Resources\Concerns\QuickpayApiConsumer;
-
 use Throwable;
-
-use Illuminate\Support\Facades\Log;
 
 class SubscriptionResource
 {
@@ -124,7 +121,7 @@ class SubscriptionResource
         $this->endpoint = 'subscriptions';
         $this->data = $subscription->toArray();
 
-       // dd($this->data);
+        // dd($this->data);
         try {
             $response = $this->request($this->method, $this->endpoint, $this->data);
         } catch (Throwable $exception) {

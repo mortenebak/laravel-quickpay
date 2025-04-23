@@ -2,15 +2,13 @@
 
 namespace Netbums\Quickpay\DataObjects;
 
-use phpDocumentor\Reflection\Types\Boolean;
-
 readonly class SubscriptionRecurring
 {
     public function __construct(
         public int $id, // transaction id
         public string $order_id,
         public int $amount, // Amount to authorize
-        public ?bool   $auto_capture = null,
+        public ?bool $auto_capture = null,
     ) {}
 
     public static function fromArray(array $data): static

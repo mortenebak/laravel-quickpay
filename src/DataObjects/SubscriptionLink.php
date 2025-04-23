@@ -2,8 +2,6 @@
 
 namespace Netbums\Quickpay\DataObjects;
 
-use phpDocumentor\Reflection\Types\Boolean;
-
 readonly class SubscriptionLink
 {
     public function __construct(
