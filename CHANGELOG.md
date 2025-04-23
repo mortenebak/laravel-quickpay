@@ -2,9 +2,9 @@
 
 All notable changes to `laravel-quickpay` will be documented in this file.
 
-## [Unreleased] - 2025-04-23
+## [v0.2.0-alpha] - 2025-04-23
 
-### Added
+### Added (Thanks, Anders Grønborg)
 - Implemented Subscription Resource and comprehensive exception handling.
     - Updated `SubscriptionResource.php` with the following functions adjusted:
         - `all()`
