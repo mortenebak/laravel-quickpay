@@ -17,6 +17,7 @@ use Netbums\Quickpay\Exceptions\Payments\FetchPaymentsFailed;
 use Netbums\Quickpay\Exceptions\Payments\RefundPaymentFailed;
 use Netbums\Quickpay\Exceptions\Payments\RenewPaymentFailed;
 use Netbums\Quickpay\Resources\Concerns\QuickpayApiConsumer;
+
 use Throwable;
 
 class PaymentResource
@@ -36,8 +37,9 @@ class PaymentResource
         try {
             $response = $this->request($this->method, $this->endpoint);
         } catch (Throwable $exception) {
+
             throw new FetchPaymentsFailed(
-                message: 'The payments could not be fetched.',
+                message: 'The payments could not be fetched: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );
@@ -76,6 +78,8 @@ class PaymentResource
      */
     public function createLink(PaymentLink $paymentLink): array
     {
+        //  https://api.quickpay.net/payments/99685196/link
+
         $id = $paymentLink->id;
         $this->method = 'put';
         $this->endpoint = 'payments/'.$id.'/link';
@@ -85,7 +89,7 @@ class PaymentResource
             $response = $this->request($this->method, $this->endpoint, $this->data);
         } catch (Throwable $exception) {
             throw new CreatePaymentLinkFailed(
-                message: 'The payment link could not be created.',
+                message: 'The payment link could not be created: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );
@@ -108,7 +112,7 @@ class PaymentResource
             $response = $this->request($this->method, $this->endpoint);
         } catch (Throwable $exception) {
             throw new DeletePaymentLinkFailed(
-                message: 'The payment link could not be deleted.',
+                message: 'The payment link could not be deleted: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );
@@ -131,7 +135,7 @@ class PaymentResource
             $response = $this->request($this->method, $this->endpoint);
         } catch (Throwable $exception) {
             throw new FetchPaymentFailed(
-                message: 'The payment with id '.$id.' could not be fetched.',
+                message: 'The payment with id '.$id.' could not be fetched: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );
@@ -159,7 +163,7 @@ class PaymentResource
             $response = $this->request($this->method, $this->endpoint);
         } catch (Throwable $exception) {
             throw new CreatePaymentSessionFailed(
-                message: 'The payment session with id '.$id.' could not be created.',
+                message: 'The payment session with id '.$id.' could not be created.: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );
@@ -187,7 +191,7 @@ class PaymentResource
             $response = $this->request($this->method, $this->endpoint, $this->data);
         } catch (Throwable $exception) {
             throw new AuthorizePaymentFailed(
-                message: 'The payment with id '.$id.' could not be fetched.',
+                message: 'The payment with id '.$id.' could not be fetched: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );
@@ -215,7 +219,7 @@ class PaymentResource
             $response = $this->request($this->method, $this->endpoint, $this->data);
         } catch (Throwable $exception) {
             throw new CapturePaymentFailed(
-                message: 'The payment with id '.$id.' could not be captured.',
+                message: 'The payment with id '.$id.' could not be captured: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );
@@ -243,7 +247,7 @@ class PaymentResource
             $response = $this->request($this->method, $this->endpoint, $this->data);
         } catch (Throwable $exception) {
             throw new RefundPaymentFailed(
-                message: 'The payment with id '.$id.' could not be refunded.',
+                message: 'The payment with id '.$id.' could not be refunded: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );
@@ -267,7 +271,7 @@ class PaymentResource
             $response = $this->request($this->method, $this->endpoint);
         } catch (Throwable $exception) {
             throw new CancelPaymentFailed(
-                message: 'The payment with id '.$id.' could not be canceled.',
+                message: 'The payment with id '.$id.' could not be canceled: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );
@@ -290,7 +294,7 @@ class PaymentResource
             $response = $this->request($this->method, $this->endpoint);
         } catch (Throwable $exception) {
             throw new RenewPaymentFailed(
-                message: 'The payment with id '.$id.' could not be renewed.',
+                message: 'The payment with id '.$id.' could not be renewed: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );
@@ -317,7 +321,7 @@ class PaymentResource
             $response = $this->request($this->method, $this->endpoint, $this->data);
         } catch (Throwable $exception) {
             throw new CreateFraudConfirmationReportFailed(
-                message: 'The fraud confirmation report for payment with id '.$id.' could not be created.',
+                message: 'The fraud confirmation report for payment with id '.$id.' could not be created: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );

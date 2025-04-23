@@ -42,7 +42,8 @@ trait QuickpayApiConsumer
             $message = json_decode($response->response_data, true);
 
             throw new QuickPayValidationError(
-                message: 'The request was not valid: '.$message,
+              //  message: 'The request was not valid: '.$message,
+                message: 'The request was not valid: ' . json_encode($message), // must be encoded since array.
                 code: $response->status_code
             );
         }

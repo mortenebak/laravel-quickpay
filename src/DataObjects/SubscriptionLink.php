@@ -4,7 +4,7 @@ namespace Netbums\Quickpay\DataObjects;
 
 use phpDocumentor\Reflection\Types\Boolean;
 
-readonly class PaymentLink
+readonly class SubscriptionLink
 {
     public function __construct(
         public int $id, // transaction id
@@ -13,7 +13,6 @@ readonly class PaymentLink
         public ?string $continue_url = null,
         public ?string $cancel_url = null,
         public ?string $callback_url = null,
-        public ?bool   $auto_capture = null,
     ) {}
 
     public static function fromArray(array $data): static
@@ -25,7 +24,6 @@ readonly class PaymentLink
             continue_url: $data['continue_url'] ?? null,
             cancel_url: $data['cancel_url'] ?? null,
             callback_url: $data['callback_url'] ?? null,
-            auto_capture: $data['auto_capture'] ?? null,
         );
     }
 
@@ -38,7 +36,6 @@ readonly class PaymentLink
             'continue_url' => $this->continue_url,
             'cancel_url' => $this->cancel_url,
             'callback_url' => $this->callback_url,
-            'auto_capture' => $this->auto_capture,
         ];
     }
 }
