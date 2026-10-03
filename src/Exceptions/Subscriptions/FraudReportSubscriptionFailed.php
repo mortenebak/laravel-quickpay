@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay\Exceptions\Subscriptions;
 
-use Exception;
+use Netbums\Quickpay\Exceptions\QuickpayException;
 
-class FraudReportSubscriptionFailed extends Exception
+class FraudReportSubscriptionFailed extends QuickpayException
 {
     //
 }

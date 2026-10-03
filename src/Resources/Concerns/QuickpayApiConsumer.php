@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay\Resources\Concerns;
 
 use Netbums\Quickpay\Exceptions\CardNotAccepted;
@@ -27,22 +29,22 @@ trait QuickpayApiConsumer
         $response = $this->client->request->$method($endpoint, $data);
 
         if ($response->status_code >= 200 && $response->status_code < 300) {
+            $result = json_decode($response->response_data, true) ?? [];
 
-            // if app is in production mode, and the request is not a test, and the card is not accepted, throw an exception
-            if (config('app.env') === 'production') { // Todo: check if in test mode or if not accepted
+            // A transaction made with a test card must never be treated as a real one in production.
+            if (app()->isProduction() && ($result['test_mode'] ?? false) === true) {
                 throw new CardNotAccepted(
                     message: 'You cannot use test cards in production mode.',
                     code: 402
                 );
             }
 
-            return json_decode($response->response_data, true);
+            return $result;
 
         } else {
             $message = json_decode($response->response_data, true);
 
             throw new QuickPayValidationError(
-                //  message: 'The request was not valid: '.$message,
                 message: 'The request was not valid: '.json_encode($message), // must be encoded since array.
                 code: $response->status_code
             );

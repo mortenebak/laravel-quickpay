@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay\Exceptions\Subscriptions;
 
-use Exception;
+use Netbums\Quickpay\Exceptions\QuickpayException;
 
-class UpdateSubscriptionFailed extends Exception
+class UpdateSubscriptionFailed extends QuickpayException
 {
     //
 }

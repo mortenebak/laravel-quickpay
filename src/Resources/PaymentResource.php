@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay\Resources;
 
 use Netbums\Quickpay\DataObjects\Payment;
@@ -30,7 +32,7 @@ class PaymentResource
      */
     public function all(): array
     {
-        $this->method = 'get';
+        $this->method   = 'get';
         $this->endpoint = 'payments';
 
         try {
@@ -54,9 +56,9 @@ class PaymentResource
      */
     public function create(Payment $payment): array
     {
-        $this->method = 'post';
+        $this->method   = 'post';
         $this->endpoint = 'payments';
-        $this->data = $payment->toArray();
+        $this->data     = $payment->toArray();
         try {
             $response = $this->request($this->method, $this->endpoint, $this->data);
         } catch (Throwable $exception) {
@@ -79,10 +81,10 @@ class PaymentResource
     {
         //  https://api.quickpay.net/payments/99685196/link
 
-        $id = $paymentLink->id;
-        $this->method = 'put';
+        $id             = $paymentLink->id;
+        $this->method   = 'put';
         $this->endpoint = 'payments/'.$id.'/link';
-        $this->data = $paymentLink->toArray();
+        $this->data     = $paymentLink->toArray();
 
         try {
             $response = $this->request($this->method, $this->endpoint, $this->data);
@@ -104,7 +106,7 @@ class PaymentResource
      */
     public function deleteLink(int $id): array
     {
-        $this->method = 'delete';
+        $this->method   = 'delete';
         $this->endpoint = 'payments/'.$id.'/link';
 
         try {
@@ -127,7 +129,7 @@ class PaymentResource
      */
     public function find(int $id): array
     {
-        $this->method = 'get';
+        $this->method   = 'get';
         $this->endpoint = 'payments/'.$id;
 
         try {
@@ -150,16 +152,16 @@ class PaymentResource
      */
     public function createPaymentSession(int $id, int $amount): array
     {
-        $this->method = 'post';
+        $this->method   = 'post';
         $this->endpoint = 'payments/'.$id.'/session';
 
         $this->data = [
-            'id' => $id,
+            'id'     => $id,
             'amount' => $amount,
         ];
 
         try {
-            $response = $this->request($this->method, $this->endpoint);
+            $response = $this->request($this->method, $this->endpoint, $this->data);
         } catch (Throwable $exception) {
             throw new CreatePaymentSessionFailed(
                 message: 'The payment session with id '.$id.' could not be created.: '.$exception->getMessage(),
@@ -178,11 +180,11 @@ class PaymentResource
      */
     public function authorize(int $id, int $amount): array
     {
-        $this->method = 'post';
+        $this->method   = 'post';
         $this->endpoint = 'payments/'.$id.'/authorize';
 
         $this->data = [
-            'id' => $id,
+            'id'     => $id,
             'amount' => $amount,
         ];
 
@@ -190,7 +192,7 @@ class PaymentResource
             $response = $this->request($this->method, $this->endpoint, $this->data);
         } catch (Throwable $exception) {
             throw new AuthorizePaymentFailed(
-                message: 'The payment with id '.$id.' could not be fetched: '.$exception->getMessage(),
+                message: 'The payment with id '.$id.' could not be authorized: '.$exception->getMessage(),
                 code: $exception->getCode(),
                 previous: $exception
             );
@@ -206,11 +208,11 @@ class PaymentResource
      */
     public function capture(int $id, int $amount): array
     {
-        $this->method = 'post';
+        $this->method   = 'post';
         $this->endpoint = 'payments/'.$id.'/capture';
 
         $this->data = [
-            'id' => $id,
+            'id'     => $id,
             'amount' => $amount,
         ];
 
@@ -234,11 +236,11 @@ class PaymentResource
      */
     public function refund(int $id, int $amount): array
     {
-        $this->method = 'post';
+        $this->method   = 'post';
         $this->endpoint = 'payments/'.$id.'/refund';
 
         $this->data = [
-            'id' => $id,
+            'id'     => $id,
             'amount' => $amount,
         ];
 
@@ -263,7 +265,7 @@ class PaymentResource
      */
     public function cancel(int $id): array
     {
-        $this->method = 'post';
+        $this->method   = 'post';
         $this->endpoint = 'payments/'.$id.'/cancel';
 
         try {
@@ -286,7 +288,7 @@ class PaymentResource
      */
     public function renew(int $id): array
     {
-        $this->method = 'post';
+        $this->method   = 'post';
         $this->endpoint = 'payments/'.$id.'/renew';
 
         try {
@@ -309,7 +311,7 @@ class PaymentResource
      */
     public function createFraudConfirmationReport(int $id, ?string $description = null): array
     {
-        $this->method = 'post';
+        $this->method   = 'post';
         $this->endpoint = 'payments/'.$id.'/fraud-report';
 
         $this->data = [

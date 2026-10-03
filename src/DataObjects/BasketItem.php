@@ -1,7 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay\DataObjects;
 
+/**
+ * @phpstan-consistent-constructor
+ */
 readonly class BasketItem
 {
     public function __construct(
@@ -26,11 +31,11 @@ readonly class BasketItem
     public function toArray(): array
     {
         return [
-            'qty' => $this->qty,
-            'item_no' => $this->item_no,
-            'item_name' => $this->item_name,
+            'qty'        => $this->qty,
+            'item_no'    => $this->item_no,
+            'item_name'  => $this->item_name,
             'item_price' => $this->item_price,
-            'vat_rate' => $this->vat_rate,
+            'vat_rate'   => $this->vat_rate,
         ];
     }
 }

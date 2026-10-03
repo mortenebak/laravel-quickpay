@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay\Exceptions\Payments;
 
-use Exception;
+use Netbums\Quickpay\Exceptions\QuickpayException;
 
-class CancelPaymentFailed extends Exception {}
+class CancelPaymentFailed extends QuickpayException {}

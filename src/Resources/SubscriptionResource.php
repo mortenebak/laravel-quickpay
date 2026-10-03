@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay\Resources;
 
 use Netbums\Quickpay\DataObjects\Subscription;
@@ -29,7 +31,7 @@ class SubscriptionResource
      */
     public function all(): array
     {
-        $this->method = 'get';
+        $this->method   = 'get';
         $this->endpoint = 'subscriptions';
 
         try {
@@ -51,7 +53,7 @@ class SubscriptionResource
      */
     public function find(string $subscriptionId): array
     {
-        $this->method = 'get';
+        $this->method   = 'get';
         $this->endpoint = "subscriptions/{$subscriptionId}";
 
         try {
@@ -70,10 +72,10 @@ class SubscriptionResource
 
     public function createSubscriptionLink(SubscriptionLink $subscriptionLink): array
     {
-        $id = $subscriptionLink->id;
-        $this->method = 'put';
+        $id             = $subscriptionLink->id;
+        $this->method   = 'put';
         $this->endpoint = "subscriptions/{$id}/link";
-        $this->data = $subscriptionLink->toArray();
+        $this->data     = $subscriptionLink->toArray();
 
         try {
             $response = $this->request($this->method, $this->endpoint, $this->data);
@@ -94,7 +96,7 @@ class SubscriptionResource
      */
     public function deletePaymentLink(string $subscriptionId): array
     {
-        $this->method = 'delete';
+        $this->method   = 'delete';
         $this->endpoint = "subscriptions/{$subscriptionId}/link";
 
         try {
@@ -117,9 +119,9 @@ class SubscriptionResource
      */
     public function create(Subscription $subscription): array
     {
-        $this->method = 'post';
+        $this->method   = 'post';
         $this->endpoint = 'subscriptions';
-        $this->data = $subscription->toArray();
+        $this->data     = $subscription->toArray();
 
         // dd($this->data);
         try {
@@ -143,9 +145,9 @@ class SubscriptionResource
      */
     public function update(string $subscriptionId, array $data): array
     {
-        $this->method = 'patch';
+        $this->method   = 'patch';
         $this->endpoint = "subscriptions/{$subscriptionId}";
-        $this->data = $data;
+        $this->data     = $data;
 
         try {
             $response = $this->request($this->method, $this->endpoint, $this->data);
@@ -165,7 +167,7 @@ class SubscriptionResource
      */
     public function authorize(string $subscriptionId): array
     {
-        $this->method = 'post';
+        $this->method   = 'post';
         $this->endpoint = "subscriptions/{$subscriptionId}/authorize";
 
         try {
@@ -186,7 +188,7 @@ class SubscriptionResource
      */
     public function cancel(string $subscriptionId): array
     {
-        $this->method = 'post';
+        $this->method   = 'post';
         $this->endpoint = "subscriptions/{$subscriptionId}/cancel";
 
         try {
@@ -204,10 +206,10 @@ class SubscriptionResource
 
     public function createRecurring(SubscriptionRecurring $subscriptionRecurring): array
     {
-        $id = $subscriptionRecurring->id;
-        $this->method = 'post';
+        $id             = $subscriptionRecurring->id;
+        $this->method   = 'post';
         $this->endpoint = "subscriptions/{$id}/recurring";
-        $this->data = $subscriptionRecurring->toArray();
+        $this->data     = $subscriptionRecurring->toArray();
 
         try {
             $response = $this->request($this->method, $this->endpoint, $this->data);
@@ -229,7 +231,7 @@ class SubscriptionResource
      */
     public function fraudReport(string $subscriptionId): array
     {
-        $this->method = 'post';
+        $this->method   = 'post';
         $this->endpoint = "subscriptions/{$subscriptionId}/fraud-report";
 
         try {
@@ -250,7 +252,7 @@ class SubscriptionResource
      */
     public function getPayments(string $subscriptionId): array
     {
-        $this->method = 'get';
+        $this->method   = 'get';
         $this->endpoint = "subscriptions/{$subscriptionId}/payments";
 
         try {

@@ -1,11 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay;
 
 use Netbums\Quickpay\Exceptions\ConfigNotCorrect;
 use Netbums\Quickpay\Resources\PaymentResource;
 use Netbums\Quickpay\Resources\SubscriptionResource;
+use Netbums\Quickpay\Support\CallbackVerifier;
 
+/**
+ * @phpstan-consistent-constructor
+ */
 class Quickpay
 {
     protected \QuickPay\QuickPay $client;
@@ -30,7 +36,7 @@ class Quickpay
 
     public static function api(): static
     {
-        return new static;
+        return new static();
     }
 
     public function payments(): PaymentResource
@@ -45,5 +51,19 @@ class Quickpay
         return new SubscriptionResource(
             client: $this->client
         );
+    }
+
+    /**
+     * @throws ConfigNotCorrect
+     */
+    public function callbacks(): CallbackVerifier
+    {
+        $privateKey = config('quickpay.private_key');
+
+        if (! $privateKey) {
+            throw new ConfigNotCorrect('You should specify a `private_key` in the `quickpay` config file to verify callbacks');
+        }
+
+        return new CallbackVerifier($privateKey);
     }
 }

@@ -1,16 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay;
 
-use Illuminate\Foundation\AliasLoader;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class QuickpayServiceProvider extends PackageServiceProvider
 {
-    protected bool $defer = true;
-
     public function configurePackage(Package $package): void
     {
         /*
@@ -21,36 +20,23 @@ class QuickpayServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-quickpay')
             ->hasConfigFile()
-            ->publishesServiceProvider('QuickpayServiceProvider')
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
-                    ->copyAndRegisterServiceProviderInApp()
                     ->askToStarRepoOnGitHub('mortenebak/laravel-quickpay');
             });
     }
 
-    public function boot(): void
+    public function packageRegistered(): void
     {
+        $this->app->singleton(Quickpay::class, fn () => new Quickpay());
+    }
+
+    public function packageBooted(): void
+    {
+        // Kept so `vendor:publish --tag=laravel-quickpay-config` from earlier versions still works.
         $this->publishes([
-            __DIR__.'/../config/quickpay.php' => config_path('quickpay.php'),
+            $this->package->basePath('/../config/quickpay.php') => config_path('quickpay.php'),
         ], 'laravel-quickpay-config');
-
-        $loader = AliasLoader::getInstance();
-        $loader->alias('Quickpay', Facades\Quickpay::class);
-    }
-
-    public function register(): void
-    {
-
-        $this->app->singleton(\Netbums\Quickpay\Quickpay::class, function ($app) {
-            return (new Quickpay)::api();
-        });
-
-    }
-
-    public function provides(): array
-    {
-        return ['quickpay'];
     }
 }

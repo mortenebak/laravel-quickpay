@@ -1,7 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay\DataObjects;
 
+/**
+ * @phpstan-consistent-constructor
+ */
 readonly class PaymentLink
 {
     public function __construct(
@@ -19,9 +24,9 @@ readonly class PaymentLink
         return new static(
             id: $data['id'],
             amount: $data['amount'],
-            language: $data['language'] ?? null,
+            language: $data['language']         ?? null,
             continue_url: $data['continue_url'] ?? null,
-            cancel_url: $data['cancel_url'] ?? null,
+            cancel_url: $data['cancel_url']     ?? null,
             callback_url: $data['callback_url'] ?? null,
             auto_capture: $data['auto_capture'] ?? null,
         );
@@ -30,11 +35,11 @@ readonly class PaymentLink
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'amount' => $this->amount,
-            'language' => $this->language,
+            'id'           => $this->id,
+            'amount'       => $this->amount,
+            'language'     => $this->language,
             'continue_url' => $this->continue_url,
-            'cancel_url' => $this->cancel_url,
+            'cancel_url'   => $this->cancel_url,
             'callback_url' => $this->callback_url,
             'auto_capture' => $this->auto_capture,
         ];

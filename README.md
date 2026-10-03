@@ -2,6 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/netbums/laravel-quickpay.svg?style=flat-square)](https://packagist.org/packages/netbums/laravel-quickpay)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/mortenebak/laravel-quickpay/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/mortenebak/laravel-quickpay/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![PHPStan](https://img.shields.io/github/actions/workflow/status/mortenebak/laravel-quickpay/phpstan.yml?branch=main&label=phpstan&style=flat-square)](https://github.com/mortenebak/laravel-quickpay/actions?query=workflow%3APHPStan+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/mortenebak/laravel-quickpay/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/mortenebak/laravel-quickpay/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/netbums/laravel-quickpay.svg?style=flat-square)](https://packagist.org/packages/netbums/laravel-quickpay)
  
@@ -18,46 +19,12 @@ This laravel package will help you utilize the Quickpay API Client, without know
 composer require netbums/laravel-quickpay
 ```
 
-[//]: # (2. Add the Provider to your `config/app.php` providers array:)
-
-[//]: # ()
-[//]: # (```php)
-
-[//]: # (// config/app.php)
-
-[//]: # ('providers' => [)
-
-[//]: # (    //...)
-
-[//]: # (    Netbums\Quickpay\QuickpayServiceProvider::class,)
-
-[//]: # (],)
-
-[//]: # (```)
-
-[//]: # (3. Add the facade to your `config/app.php` aliases array:)
-
-[//]: # ()
-[//]: # (```php)
-
-[//]: # (// config/app.php)
-
-[//]: # ('aliases' => [)
-
-[//]: # (    //...)
-
-[//]: # (    'Quickpay' => Netbums\Quickpay\Facades\Quickpay::class,)
-
-[//]: # (],)
-
-[//]: # (```)
-
 2. Publish the config file with:
 
 ```bash
-php artisan vendor:publish
+php artisan quickpay:install
 ```
-Search for "quickpay", and publish both the **config** and `Netbums\Quickpay\QuickpayServiceProvider`
+The service provider and the `Quickpay` facade are registered automatically. The config is merged from the package, so publishing it is only needed if you want to change it.
 
 This is the contents of the published config file:
 
@@ -68,6 +35,7 @@ return [
     'login' => env('QUICKPAY_LOGIN'),
     'password' => env('QUICKPAY_PASSWORD'),
     'merchant_id' => env('QUICKPAY_MERCHANT_ID'),
+    'private_key' => env('QUICKPAY_PRIVATE_KEY'),
 ];
 ```
 
@@ -83,6 +51,17 @@ QUICKPAY_LOGIN=
 QUICKPAY_PASSWORD=
 QUICKPAY_MERCHANT_ID=
 ```
+
+To verify callbacks, add the private key of your Quickpay account (Settings > Integration in the Quickpay manager):
+
+```bash
+QUICKPAY_PRIVATE_KEY=
+```
+
+## Requirements
+
+PHP 8.3 or newer and Laravel 12 or 13.
+
 ---
 ## Usage
 
@@ -152,10 +131,6 @@ $paymentLink = Quickpay::payments()->createLink($paymentLinkData);
 ```
 This will return a URL, that you can redirect the user to.
 
-#### Update a payment
-```php
-```
-
 #### Capture a payment
 Capture a payment. This will capture the amount of the payment specified.
 ```php
@@ -224,7 +199,7 @@ $paymentLinkData = new PaymentLink(
     callback_url: 'https://example.com/callback',
 );
 
-$paymentLink = Quickpay::payments()->createPaymentLink(
+$paymentLink = Quickpay::payments()->createLink(
     paymentLink: $paymentLinkData,
 );
 ```
@@ -233,7 +208,7 @@ $paymentLink = Quickpay::payments()->createPaymentLink(
 ```php
 use \Netbums\Quickpay\Facades\Quickpay;
 
-$session = Quickpay::payments()->session(
+$session = Quickpay::payments()->createPaymentSession(
     id: $paymentId,
     amount: 100, // in smallest currency unit
 );
@@ -244,7 +219,7 @@ Create a fraud report for a payment. Optional parameters are: `description`:
 ```php
 use \Netbums\Quickpay\Facades\Quickpay;
 
-$fraudReport = Quickpay::payments()->createFraudReport(
+$fraudReport = Quickpay::payments()->createFraudConfirmationReport(
     id: $paymentId,
     description: 'Fraudulent payment',
 );
@@ -284,7 +259,6 @@ use \Netbums\Quickpay\DataObjects\SubscriptionLink;
 $subscriptionLinkData = new SubscriptionLink(
     id: $createdSubscription['id'],
     amount: 100, // in smallest currency unit
-    order_id: 'link_'.uniqid(),
     language: 'en',
     continue_url: 'https://example.com/continue',
     cancel_url: 'https://example.com/cancel',
@@ -316,9 +290,7 @@ use \Netbums\Quickpay\DataObjects\Subscription;
 $subscriptionData = new Subscription(
     currency: 'DKK',
     order_id: 'order_'.uniqid(),
-    description: 'Subscription description', // Example description
-    // Add other relevant Subscription properties based on Quickpay docs if known
-    // e.g., frequency: 30
+    description: 'Subscription description',
 );
 
 $createdSubscription = Quickpay::subscriptions()->create($subscriptionData);
@@ -371,8 +343,9 @@ use \Netbums\Quickpay\DataObjects\SubscriptionRecurring;
 
 $subscriptionRecurringData = new SubscriptionRecurring(
     id: $subscriptionId,
-    amount: 100 // in smallest currency unit
-    // ... other SubscriptionRecurring properties
+    order_id: 'order_'.uniqid(),
+    amount: 100, // in smallest currency unit
+    auto_capture: true, // optional
 );
 
 $recurringPayment = Quickpay::subscriptions()->createRecurring($subscriptionRecurringData);
@@ -400,9 +373,35 @@ $subscriptionId = 'your_subscription_id';
 $payments = Quickpay::subscriptions()->getPayments($subscriptionId);
 ```
 
-### Exception Handling
+## Callbacks
 
-Dedicated exception classes are provided for handling errors during subscription operations. These include:
+Quickpay signs every callback with the private key of your account and sends the signature in the `Quickpay-Checksum-Sha256` header. Verify it before you trust the payload:
+
+```php
+use Illuminate\Http\Request;
+use \Netbums\Quickpay\Facades\Quickpay;
+
+public function __invoke(Request $request)
+{
+    abort_unless(Quickpay::callbacks()->isValidRequest($request), 403);
+
+    $payment = $request->json()->all();
+
+    // ...
+}
+```
+
+If you have the raw body and checksum at hand, use `Quickpay::callbacks()->isValid($body, $checksum)`. Remember to exclude the callback route from CSRF protection.
+
+## Test mode
+
+When your application runs in the `production` environment, a response for a transaction made with a test card (`test_mode` is `true`) throws `Netbums\Quickpay\Exceptions\CardNotAccepted`, wrapped in the exception of the operation you called. In every other environment test transactions are returned as usual.
+
+## Exception Handling
+
+Every exception thrown by the package extends `Netbums\Quickpay\Exceptions\QuickpayException`, so you can catch that to handle them all. The original exception is available through `getPrevious()`.
+
+Dedicated exception classes are provided for handling errors during payment (`Netbums\Quickpay\Exceptions\Payments`) and subscription (`Netbums\Quickpay\Exceptions\Subscriptions`) operations. The subscription exceptions are:
 
 - `FetchSubscriptionFailed`
 - `FetchSubscriptionsFailed`
@@ -416,19 +415,19 @@ Dedicated exception classes are provided for handling errors during subscription
 - `FraudReportSubscriptionFailed`
 - `GetSubscriptionPaymentsFailed`
 
-You should wrap your Quickpay subscription calls in try-catch blocks to handle these specific exceptions.
+You should wrap your Quickpay calls in try-catch blocks to handle these specific exceptions.
+
+## Testing
+
+```bash
+composer test
+composer analyse
+composer format
+```
 
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
 

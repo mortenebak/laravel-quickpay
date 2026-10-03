@@ -4,4 +4,6 @@ declare(strict_types=1);
 
 namespace Netbums\Quickpay\Exceptions;
 
-class CardNotAccepted extends QuickpayException {}
+use Exception;
+
+class QuickpayException extends Exception {}

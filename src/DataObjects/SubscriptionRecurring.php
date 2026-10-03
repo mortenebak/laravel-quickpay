@@ -1,7 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay\DataObjects;
 
+/**
+ * @phpstan-consistent-constructor
+ */
 readonly class SubscriptionRecurring
 {
     public function __construct(
@@ -17,16 +22,16 @@ readonly class SubscriptionRecurring
             id: $data['id'],
             order_id: $data['order_id'],
             amount: $data['amount'],
-            auto_capture: $data['auto_capture'],
+            auto_capture: $data['auto_capture'] ?? null,
         );
     }
 
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'order_id' => $this->order_id,
-            'amount' => $this->amount,
+            'id'           => $this->id,
+            'order_id'     => $this->order_id,
+            'amount'       => $this->amount,
             'auto_capture' => $this->auto_capture,
         ];
     }
