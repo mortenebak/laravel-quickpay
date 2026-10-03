@@ -9,12 +9,12 @@ jobs:
   dependabot:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'mortenebak/laravel-quickpay' }}
     steps:
 
       - name: Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v2.5.0
+        uses: dependabot/fetch-metadata@v3.1.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
