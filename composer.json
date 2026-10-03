@@ -1,12 +1,15 @@
 {
     "name": "netbums/laravel-quickpay",
-    "description": "A fluent api around the quickpay api for Laravel applications",
+    "description": "A fluent API around the Quickpay API for Laravel applications",
     "keywords": [
-        "Netbums",
+        "netbums",
         "laravel",
-        "laravel-quickpay"
+        "laravel-quickpay",
+        "quickpay",
+        "payment",
+        "gateway"
     ],
-    "homepage": "https://github.com/netbums/laravel-quickpay",
+    "homepage": "https://github.com/mortenebak/laravel-quickpay",
     "license": "MIT",
     "authors": [
         {
@@ -16,47 +19,38 @@
         }
     ],
     "require": {
-        "php": "^8.2",
-        "illuminate/contracts": "^v12.0.1",
+        "php": "^8.3",
+        "illuminate/contracts": "^12.0|^13.0",
+        "illuminate/http": "^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0",
         "quickpay/quickpay-php-client": "^2.0",
-        "spatie/laravel-package-tools": "^1.14.0"
+        "spatie/laravel-package-tools": "^1.16"
     },
     "require-dev": {
-        "laravel/pint": "^v1.21.0",
-        "nunomaduro/collision": "^v8.6.1",
-        "orchestra/testbench": "^v10.0.0",
-        "pestphp/pest": "^v3.7.4",
-        "pestphp/pest-plugin-arch": "^v3.0.0",
-        "pestphp/pest-plugin-laravel": "^v3.1.0",
-        "phpstan/extension-installer": "^1.4.3",
-        "phpstan/phpstan-deprecation-rules": "^2.0.1",
-        "phpstan/phpstan-phpunit": "^2.0.4"
+        "larastan/larastan": "^3.0",
+        "laravel/pint": "^1.14",
+        "nunomaduro/collision": "^8.8",
+        "orchestra/testbench": "^10.0|^11.0",
+        "pestphp/pest": "^4.0",
+        "pestphp/pest-plugin-arch": "^4.0",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0"
     },
     "autoload": {
         "psr-4": {
-            "Netbums\\Quickpay\\": "src/",
-            "Netbums\\Quickpay\\Database\\Factories\\": "database/factories/"
+            "Netbums\\Quickpay\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Netbums\\Quickpay\\Tests\\": "tests/",
-            "Workbench\\App\\": "workbench/app/"
+            "Netbums\\Quickpay\\Tests\\": "tests/"
         }
     },
     "scripts": {
         "post-autoload-dump": "@composer run prepare",
-        "clear": "@php vendor/bin/testbench package:purge-laravel-quickpay --ansi",
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
-        "build": [
-            "@composer run prepare",
-            "@php vendor/bin/testbench workbench:build --ansi"
-        ],
-        "start": [
-            "Composer\\Config::disableProcessTimeout",
-            "@composer run build",
-            "@php vendor/bin/testbench serve"
-        ],
         "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",

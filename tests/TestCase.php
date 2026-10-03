@@ -1,36 +1,43 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Netbums\Quickpay\QuickpayServiceProvider;
+use Netbums\Quickpay\Tests\Fakes\FakeRequest;
 use Orchestra\Testbench\TestCase as Orchestra;
+use QuickPay\QuickPay as QuickPayClient;
 
 class TestCase extends Orchestra
 {
-    protected function setUp(): void
+    protected function getPackageProviders($app): array
     {
-        parent::setUp();
-
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Netbums\\Quickpay\\Database\\Factories\\'.class_basename($modelName).'Factory'
-        );
+        return [QuickpayServiceProvider::class];
     }
 
-    protected function getPackageProviders($app)
+    protected function getEnvironmentSetUp($app): void
     {
-        return [
-            QuickpayServiceProvider::class,
-        ];
+        $app['config']->set('quickpay.api_key', 'test-api-key');
+        $app['config']->set('quickpay.private_key', 'test-private-key');
     }
 
-    public function getEnvironmentSetUp($app)
+    /**
+     * A Quickpay client whose requests are answered by the returned fake.
+     *
+     * @param  array<mixed>  $response
+     * @return array{0: QuickPayClient, 1: FakeRequest}
+     */
+    protected function fakeClient(array $response = [], int $statusCode = 200): array
     {
-        config()->set('database.default', 'testing');
+        $client = new QuickPayClient(':test-api-key');
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_laravel-quickpay_table.php.stub';
-        $migration->up();
-        */
+        $fake             = new FakeRequest($client->request->client);
+        $fake->statusCode = $statusCode;
+        $fake->body       = (string) json_encode($response);
+
+        $client->request = $fake;
+
+        return [$client, $fake];
     }
 }

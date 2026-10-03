@@ -1,7 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay\Exceptions;
 
-use Exception;
-
-class QuickPayTestNotAllowed extends Exception {}
+class QuickPayTestNotAllowed extends QuickpayException {}

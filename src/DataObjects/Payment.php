@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netbums\Quickpay\DataObjects;
 
 readonly class Payment
@@ -15,10 +17,10 @@ readonly class Payment
     public function toArray(): array
     {
         return [
-            'currency' => $this->currency,
-            'order_id' => $this->order_id,
-            'basket' => $this->basket->toArray(),
-            'invoice_address' => $this->invoice_address?->toArray() ?? null,
+            'currency'         => $this->currency,
+            'order_id'         => $this->order_id,
+            'basket'           => $this->basket->toArray(),
+            'invoice_address'  => $this->invoice_address?->toArray()  ?? null,
             'shipping_address' => $this->shipping_address?->toArray() ?? null,
         ];
     }
